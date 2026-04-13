@@ -16,22 +16,21 @@ cargo build --workspace
 
 `/doctor` is the built-in setup and preflight diagnostic. Once you have a saved session, you can rerun it with `./target/debug/claw --resume latest /doctor`.
 
-## Prerequisites
+## Install / setup
 
-- Rust toolchain with `cargo`
-- One of:
-  - `ANTHROPIC_API_KEY` for direct API access
-  - `ANTHROPIC_AUTH_TOKEN` for bearer-token auth
-- Optional: `ANTHROPIC_BASE_URL` when targeting a proxy or local service
+The fastest way to install **Claw Code** is via the official installer:
 
-## Install / build the workspace
-
+**macOS / Linux:**
 ```bash
-cd rust
-cargo build --workspace
+curl -sSL https://raw.githubusercontent.com/ultraworkers/claw-code/main/install.sh | sh
 ```
 
-The CLI binary is available at `rust/target/debug/claw` after a debug build. Make the doctor check above your first post-build step.
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -Command "iwr https://raw.githubusercontent.com/ultraworkers/claw-code/main/install.ps1 -useb | iex"
+```
+
+The CLI binary `claw` (or `claw.exe`) will be installed to your system path. Use the doctor check below as your first post-install step.
 
 ## Quick start
 

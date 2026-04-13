@@ -71,7 +71,7 @@ trap 'rm -rf "${TMP_DIR}"' EXIT
 CLAW_TMP="${TMP_DIR}/claw"
 
 if command -v curl >/dev/null 2>&1; then
-    curl -sfSL -o "${CLAW_TMP}" "${LATEST_RELEASE_URL}" || error "Download failed (HTTP 404 or connection error). The release might not be published yet at ${LATEST_RELEASE_URL}"
+    curl -sSL -o "${CLAW_TMP}" "${LATEST_RELEASE_URL}" || error "Download failed. The release might not be published yet."
 elif command -v wget >/dev/null 2>&1; then
     wget -q -O "${CLAW_TMP}" "${LATEST_RELEASE_URL}" || error "Download failed."
 else

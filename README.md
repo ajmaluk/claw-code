@@ -45,56 +45,52 @@ The canonical implementation lives in [`rust/`](./rust), and the current source 
 
 ## Quick start
 
-> [!NOTE]
-> [!WARNING]
-> **`cargo install claw-code` installs the wrong thing.** The `claw-code` crate on crates.io is a deprecated stub that places `claw-code-deprecated.exe` — not `claw`. Running it only prints `"claw-code has been renamed to agent-code"`. **Do not use `cargo install claw-code`.** Either build from source (this repo) or install the upstream binary:
-> ```bash
-> cargo install agent-code   # upstream binary — installs 'agent.exe' (Windows) / 'agent' (Unix), NOT 'agent-code'
-> ```
-> This repo (`ultraworkers/claw-code`) is **build-from-source only** — follow the steps below.
+The fastest way to install **Claw Code** is via the official installer:
 
+**macOS / Linux:**
 ```bash
-# 1. Clone and build
-git clone https://github.com/ultraworkers/claw-code
-cd claw-code/rust
-cargo build --workspace
+curl -sSL https://raw.githubusercontent.com/ultraworkers/claw-code/main/install.sh | sh
+```
 
-# 2. Set your API key (Anthropic API key — not a Claude subscription)
-export ANTHROPIC_API_KEY="sk-ant-..."
-
-# 3. Verify everything is wired correctly
-./target/debug/claw doctor
-
-# 4. Run a prompt
-./target/debug/claw prompt "say hello"
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -Command "iwr https://raw.githubusercontent.com/ultraworkers/claw-code/main/install.ps1 -useb | iex"
 ```
 
 > [!NOTE]
-> **Windows (PowerShell):** the binary is `claw.exe`, not `claw`. Use `.\target\debug\claw.exe` or run `cargo run -- prompt "say hello"` to skip the path lookup.
+> **No dependencies needed:** These scripts download the pre-compiled binary for your system. You do **not** need to install Rust or Visual Studio to *use* Claw Code.
 
-### Windows setup
+### First-run health check
 
-**PowerShell is a supported Windows path.** Use whichever shell works for you. The common onboarding issues on Windows are:
+```bash
+# 1. Set your API key (Anthropic API key — not a Claude subscription)
+export ANTHROPIC_API_KEY="sk-ant-..."
 
-1. **Install Rust first** — download from <https://rustup.rs/> and run the installer. Close and reopen your terminal when it finishes.
-2. **Verify Rust is on PATH:**
-   ```powershell
-   cargo --version
-   ```
-   If this fails, reopen your terminal or run the PATH setup from the Rust installer output, then retry.
-3. **Clone and build** (works in PowerShell, Git Bash, or WSL):
-   ```powershell
+# 2. Verify everything is wired correctly
+claw doctor
+
+# 3. Run a prompt
+claw prompt "say hello"
+```
+
+## Build from source (Developers)
+
+If you prefer to build from source or are contributing to Claw Code:
+
+1. **Clone and build**
+   ```bash
    git clone https://github.com/ultraworkers/claw-code
    cd claw-code/rust
    cargo build --workspace
    ```
-4. **Run** (PowerShell — note `.exe` and backslash):
-   ```powershell
-   $env:ANTHROPIC_API_KEY = "sk-ant-..."
-   .\target\debug\claw.exe prompt "say hello"
+2. **Run**
+   ```bash
+   ./target/debug/claw doctor
    ```
 
-**Git Bash / WSL** are optional alternatives, not requirements. If you prefer bash-style paths (`/c/Users/you/...` instead of `C:\Users\you\...`), Git Bash (ships with Git for Windows) works well. In Git Bash, the `MINGW64` prompt is expected and normal — not a broken install.
+### Windows build setup
+
+If building manually on Windows, you will need the **Rust toolchain** (from rustup.rs) and the **C++ Build Tools**. Building is not required to *use* the tool — use the PowerShell installer above for the fastest setup.
 
 > [!NOTE]
 > **Auth:** claw requires an **API key** (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, etc.) — Claude subscription login is not a supported auth path.
